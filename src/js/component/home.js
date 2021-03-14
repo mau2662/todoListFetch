@@ -7,18 +7,34 @@ import { Button } from "bootstrap";
 export function Home() {
 	const [task, setTask] = useState("");
 	const [taskList, setTaskList] = useState([]);
-
+	let itemsLita = 0;
 	const generarLista = () => {
-		return taskList.map(detalle => {
-			return generarItem(detalle);
+		return taskList.map((detalle, indice) => {
+			return generarItem(detalle, indice);
 		});
 	};
 
-	const generarItem = detalle => {
+	const deleteItem = (evento, indice) => {
+		const posicion = indice;
+		let arrayResultado = [];
+		for (let i = 0; i < taskList.length; i++) {
+			if (i !== posicion) {
+				arrayResultado.push(taskList[i]);
+			}
+		}
+		console.log(arrayResultado);
+		setTaskList(arrayResultado);
+	};
+
+	const generarItem = (detalle, indice) => {
 		return (
-			<li className="list-group-item">
+			<li className="list-group-item" key={indice}>
 				<p className="d-inline-block text-secondary ml-5">{detalle}</p>
-				<button className="btn btn-outline-secondary float-right">
+				<button
+					className="btn btn-outline-secondary float-right"
+					onClick={evento => {
+						deleteItem(evento, indice);
+					}}>
 					<i className="fas fa-times float-right"></i>
 				</button>
 			</li>
@@ -44,7 +60,7 @@ export function Home() {
 			<ul className="list-group"> {generarLista()} </ul>
 			<div className="card">
 				<ul className="list-group list-group-flush">
-					<li className="list-group-item text-secondary">4 left</li>
+					<li className="list-group-item text-secondary"> </li>
 				</ul>
 			</div>
 		</div>
