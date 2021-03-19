@@ -60,7 +60,9 @@ export function Home() {
 			<ul className="list-group"> {generarLista()} </ul>
 			<div className="card">
 				<ul className="list-group list-group-flush">
-					<li className="list-group-item text-secondary"> </li>
+					<li className="list-group-item text-secondary">
+						{taskList.length} Items left
+					</li>
 				</ul>
 			</div>
 		</div>
