@@ -14,6 +14,10 @@ export function Home() {
 		});
 	};
 
+	const hideItem = eventoHide => {
+		console.log("hola");
+	};
+
 	const deleteItem = (evento, indice) => {
 		const posicion = indice;
 		let arrayResultado = [];
@@ -32,6 +36,9 @@ export function Home() {
 				<p className="d-inline-block text-secondary ml-5">{detalle}</p>
 				<button
 					className="btn btn-outline-secondary float-right"
+					onMouseOver={eventoHide => {
+						hideItem(eventoHide);
+					}}
 					onClick={evento => {
 						deleteItem(evento, indice);
 					}}>
