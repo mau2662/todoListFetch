@@ -7,6 +7,7 @@ import { Button } from "bootstrap";
 export function Home() {
 	const [task, setTask] = useState("");
 	const [taskList, setTaskList] = useState([]);
+	const [indice, setIndice] = useState(-1);
 	let itemsLita = 0;
 	const generarLista = () => {
 		return taskList.map((detalle, indice) => {
@@ -14,33 +15,50 @@ export function Home() {
 		});
 	};
 
-	const hideItem = eventoHide => {
-		console.log("hola");
+	const clasesBtn = index => {
+		if (index === indice) {
+			return "btn btn-outline-secondary float-right visible";
+		} else {
+			return "btn btn-outline-secondary float-right invisible";
+		}
 	};
 
-	const deleteItem = (evento, indice) => {
-		const posicion = indice;
+	const hideItem = (eventoHide, index) => {
+		setIndice(index);
+	};
+
+	const mouseOut = () => {
+		setIndice(-1);
+	};
+
+	const deleteItem = (evento, index) => {
+		const posicion = index;
 		let arrayResultado = [];
 		for (let i = 0; i < taskList.length; i++) {
 			if (i !== posicion) {
 				arrayResultado.push(taskList[i]);
 			}
 		}
-		console.log(arrayResultado);
+
 		setTaskList(arrayResultado);
 	};
 
-	const generarItem = (detalle, indice) => {
+	const generarItem = (detalle, index) => {
 		return (
-			<li className="list-group-item" key={indice}>
+			<li
+				className="list-group-item"
+				key={index}
+				onMouseOver={eventoHide => {
+					hideItem(eventoHide, index);
+				}}
+				onMouseOut={eventoMouseOut => {
+					mouseOut();
+				}}>
 				<p className="d-inline-block text-secondary ml-5">{detalle}</p>
 				<button
-					className="btn btn-outline-secondary float-right"
-					onMouseOver={eventoHide => {
-						hideItem(eventoHide);
-					}}
+					className={clasesBtn(index)}
 					onClick={evento => {
-						deleteItem(evento, indice);
+						deleteItem(evento, index);
 					}}>
 					<i className="fas fa-times float-right"></i>
 				</button>
