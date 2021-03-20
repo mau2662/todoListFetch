@@ -8,7 +8,7 @@ export function Home() {
 	const [task, setTask] = useState("");
 	const [taskList, setTaskList] = useState([]);
 	const [indice, setIndice] = useState(-1);
-	let itemsLita = 0;
+
 	const generarLista = () => {
 		return taskList.map((detalle, indice) => {
 			return generarItem(detalle, indice);
