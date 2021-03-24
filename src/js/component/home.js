@@ -80,9 +80,7 @@ export function Home() {
 		};
 		fetch(url, requestOption)
 			.then(res => res.json())
-			.then(data => {
-				console.log("Tarea Agregada");
-			})
+			.then(data => {})
 			.catch(error => console.log("error" + error));
 	};
 
@@ -98,7 +96,7 @@ export function Home() {
 		fetch(url, requestOption)
 			.then(res => res.json())
 			.then(data => {
-				console.log("Tarea eliminada");
+				console.log("Lista de Tareas Vacia");
 			})
 			.catch(error => console.log("error" + error));
 	};
