@@ -190,6 +190,7 @@ export function Home() {
 				className="btn btn-danger"
 				onClick={evento => {
 					deleteLista();
+					window.location.href = window.location.href;
 				}}>
 				Delete List
 			</button>
