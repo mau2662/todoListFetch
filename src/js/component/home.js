@@ -29,7 +29,14 @@ export function Home() {
 			}
 		};
 		fetch(url, requestOption)
-			.then(res => res.json())
+			.then(res => {
+				if (res.ok) {
+					return res.json();
+				}
+				if (res.status === 404) {
+					return taskList;
+				}
+			})
 			.then(data => {
 				setTaskList(data);
 			})
@@ -47,9 +54,51 @@ export function Home() {
 			body: JSON.stringify(list)
 		};
 		fetch(url, requestOption)
-			.then(res => res.json())
+			.then(res => {
+				if (res.ok) {
+					res.json();
+				}
+				if (res.status === 404) {
+					postLista();
+				}
+			})
 			.then(data => {
 				console.log("Lista Actualizada");
+			})
+			.catch(error => console.log("error" + error));
+	};
+
+	const postLista = () => {
+		const url = "https://assets.breatheco.de/apis/fake/todos/user/mau26";
+
+		const requestOption = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify([])
+		};
+		fetch(url, requestOption)
+			.then(res => res.json())
+			.then(data => {
+				console.log("Tarea Agregada");
+			})
+			.catch(error => console.log("error" + error));
+	};
+
+	const deleteLista = () => {
+		const url = "https://assets.breatheco.de/apis/fake/todos/user/mau26";
+
+		const requestOption = {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+		fetch(url, requestOption)
+			.then(res => res.json())
+			.then(data => {
+				console.log("Tarea eliminada");
 			})
 			.catch(error => console.log("error" + error));
 	};
@@ -78,8 +127,8 @@ export function Home() {
 				arrayResultado.push(taskList[i]);
 			}
 		}
-
 		setTaskList(arrayResultado);
+		putLista(arrayResultado);
 	};
 
 	const generarItem = (detalle, index) => {
