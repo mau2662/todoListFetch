@@ -187,6 +187,14 @@ export function Home() {
 					</li>
 				</ul>
 			</div>
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={evento => {
+					deleteLista();
+				}}>
+				Delete List
+			</button>
 		</div>
 	);
 }
