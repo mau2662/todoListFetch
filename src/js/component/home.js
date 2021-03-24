@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "bootstrap";
 
 //include images into your bundle
@@ -13,6 +13,45 @@ export function Home() {
 		return taskList.map((detalle, indice) => {
 			return generarItem(detalle, indice);
 		});
+	};
+
+	useEffect(() => {
+		getLista();
+	}, []);
+
+	const getLista = () => {
+		const url = "https://assets.breatheco.de/apis/fake/todos/user/mau26";
+
+		const requestOption = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+		fetch(url, requestOption)
+			.then(res => res.json())
+			.then(data => {
+				setTaskList(data);
+			})
+			.catch(error => console.log("error" + error));
+	};
+
+	const putLista = list => {
+		const url = "https://assets.breatheco.de/apis/fake/todos/user/mau26";
+
+		const requestOption = {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(list)
+		};
+		fetch(url, requestOption)
+			.then(res => res.json())
+			.then(data => {
+				console.log("Lista Actualizada");
+			})
+			.catch(error => console.log("error" + error));
 	};
 
 	const clasesBtn = index => {
@@ -54,7 +93,9 @@ export function Home() {
 				onMouseOut={eventoMouseOut => {
 					mouseOut();
 				}}>
-				<p className="d-inline-block text-secondary ml-5">{detalle}</p>
+				<p className="d-inline-block text-secondary ml-5">
+					{detalle.label}
+				</p>
 				<button
 					className={clasesBtn(index)}
 					onClick={evento => {
@@ -67,8 +108,15 @@ export function Home() {
 	};
 
 	const handleOnKeyPress = e => {
+		const objetoApi = {
+			label: task,
+			done: false
+		};
 		if (e.key === "Enter") {
-			setTaskList([...taskList, task]), setTask("");
+			const listaActualizada = [...taskList, objetoApi];
+			setTaskList(listaActualizada);
+			setTask("");
+			putLista(listaActualizada);
 		}
 	};
 	return (
